@@ -1,0 +1,4 @@
+config/main.php
+config/menu.php
+config/icon_menu.php
+migrations/init.sql
