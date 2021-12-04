@@ -84,7 +84,7 @@
 											<div class="u-text">
 												<h4><?=auth()->user->name?></h4>
 												<p class="text-muted"><?=get_role(auth()->user->id)->name?></p>
-												<a href="index.php" class="btn btn-xs btn-success btn-sm">Profil</a>
+												<a href="index.php?r=default/profile" class="btn btn-xs btn-success btn-sm">Profil</a>
 												<a href="index.php?r=auth/logout" class="btn btn-xs btn-secondary btn-sm">Log Out</a>
 											</div>
 										</div>
