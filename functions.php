@@ -53,39 +53,51 @@ function generated_menu($user_id)
     $menu = config('menu')['menu'];
     $icon = config('menu')['icon'];
     $generated = "";
+    $r = get_route();
 
     foreach($menu as $key => $route)
     {
         if(is_array($route))
         {
-            $dropdown = '<li class="nav-item">
-                            <a data-toggle="collapse" href="#'.$key.'">
-                                <i class="'.$icon[$key].'"></i>
-                                <p>'.ucwords($key).'</p>
-                                <span class="caret"></span>
-                            </a>
-                            <div class="collapse" id="'.$key.'">
-                                <ul class="nav nav-collapse">';
+            $dropdown = '';
             $allowed = false;
+            $active = false;
+
             foreach($route as $label => $submenu)
             {
                 if(!is_allowed($submenu,$user_id)) continue;
                 $allowed = true;
-                $dropdown .= '<li>
-                                    <a href="index.php?r='.$submenu.'">
-                                        <span class="sub-item">'.ucwords($label).'</span>
-                                    </a>
-                                </li>';
+                $start_route = str_replace('/index','',$submenu);
+                if(!$active)
+                    $active = startWith($r, $start_route);
+                $dropdown .= '<li class="'.(startWith($r, $start_route)?'active':'').'">
+                                <a href="index.php?r='.$submenu.'">
+                                    <span class="sub-item">'.ucwords($label).'</span>
+                                </a>
+                            </li>';
             }
 
-            $dropdown .= '</ul></div></li>';
+            $dropdown = '<li class="nav-item '.($active?'active submenu':'').'">
+                            <a data-toggle="collapse" href="#'.$key.'" aria-expanded="'.($active?'true':'').'">
+                                <i class="'.$icon[$key].'"></i>
+                                <p>'.ucwords($key).'</p>
+                                <span class="caret"></span>
+                            </a>
+                            <div class="collapse '.($active?'show':'').'" id="'.$key.'">
+                                <ul class="nav nav-collapse">
+                                '.$dropdown.'
+                                </ul>
+                            </div>
+                        </li>';
             if(!$allowed) continue;
             $generated .= $dropdown;
         }
         else
         {
             if(!is_allowed($route,$user_id)) continue;
-            $generated .= '<li class="nav-item">
+            $start_route = str_replace('/index','',$route);
+            $active = startWith($r, $start_route);
+            $generated .= '<li class="nav-item '.($active?'active':'').'">
                                 <a href="index.php?r='.$route.'">
                                     <i class="'.$icon[$key].'"></i>
                                     <p>'.ucwords($key).'</p>
