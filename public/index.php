@@ -1,6 +1,8 @@
 <?php
 session_start();
 date_default_timezone_set('Asia/Jakarta');
+if(file_exists('../vendor/autoload.php'))
+    require '../vendor/autoload.php';
 require '../functions.php';
 
 // do before action

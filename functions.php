@@ -199,12 +199,18 @@ function load_action($action)
     return [];
 }
 
-function load_templates($template, $data = [])
+function load_templates($template, $data = [], $flush = false)
 {    
     if(file_exists('../templates/'.$template.'.php'))
     {
         extract($data);
+        if($flush)
+            ob_start();
+
         require '../templates/'.$template.'.php';
+        
+        if($flush)
+            return ob_get_clean();
     }
     else
         require '../templates/errors/404.php';
@@ -405,4 +411,13 @@ function simple_curl($uri, $method='GET', $data=null, $curl_headers=array(), $cu
 		'content' => $content,
 		'error' => $error
 	);
+}
+
+function count_total($items)
+{
+    $total = 0;
+    foreach($items as $item)
+        $total += $item['subtotal'];
+
+    return $total;
 }
