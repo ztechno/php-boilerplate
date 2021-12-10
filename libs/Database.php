@@ -170,7 +170,8 @@ class Database
                     $operator = $value[0];
                     $val = $value[1];
                 }
-                $val = $this->connection->real_escape_string($val);
+                if($this->type == 'mysqli')
+                    $val = $this->connection->real_escape_string($val);
                 if(in_array($val,$this->without_quote) || strtoupper($operator) == 'NOT IN')
                 $string .= "$key $operator $val";
                 else
@@ -192,7 +193,8 @@ class Database
         {
             foreach($values as $key => $value)
             {
-                $value = $this->connection->real_escape_string($value);
+                if($this->type == 'mysqli')
+                    $value = $this->connection->real_escape_string($value);
                 if(in_array($value,$this->without_quote))
                 $string .= "$key=$value";
                 else
@@ -214,6 +216,7 @@ class Database
         {
             foreach($order as $key => $value)
             {
+                if($this->type == 'mysqli')
                 $value = $this->connection->real_escape_string($value);
                 $string .= "$key $value";
                 $last_iteration = !(--$count_order);
