@@ -34,8 +34,14 @@ if(!isset($auth->user) && !in_array($route, ['auth/login','installation']))
     die();
 }
 
+if(isset($auth->user) && !isset($auth->user->id) && $route != 'auth/logout')
+{
+    header("location:index.php?r=auth/logout");
+    die();
+}
+
 // check if route is allowed
-if(isset($auth->user) && !is_allowed($route, $auth->user->id) && $route != 'auth/logout')
+if(isset($auth->user) && isset($auth->user->id) && !is_allowed($route, $auth->user->id) && $route != 'auth/logout')
 {
     return false;
 }
