@@ -98,5 +98,5 @@
 			<!-- End Navbar -->
 		</div>
 
+		<?php load_templates('layouts/sidebar') ?>
 		<div class="main-panel">
-			<?php load_templates('layouts/sidebar') ?>
