@@ -2,6 +2,7 @@
 
 class Database
 {
+    public $get_error = false;
     public $query = '';
     public $table = '';
     public $type = '';
@@ -51,7 +52,7 @@ class Database
         return $this->exec('updateall');
     }
 
-    function all($table, $clause = [], $order = [])
+    function all($table, $clause = [], $order = [], $limit = 0)
     {
         $this->table = $table;
         $conn = $this->connection;
@@ -63,6 +64,9 @@ class Database
         
         if($string_order)
             $this->query .= ' ORDER BY '.$string_order;
+
+        if($limit)
+            $this->query .= ' LIMIT '.$limit;
         return $this->exec('all');
     }
 
@@ -147,6 +151,7 @@ class Database
             {
                 // echo $this->query;
                 // echo "<br>";
+                if($this->get_error) return $this->connection->error;
                 print_r($this->connection->error);
                 die();
             }
@@ -170,8 +175,7 @@ class Database
                     $operator = $value[0];
                     $val = $value[1];
                 }
-                if($this->type == 'mysqli')
-                    $val = $this->connection->real_escape_string($val);
+                $val = $this->connection->real_escape_string($val);
                 if(in_array($val,$this->without_quote) || strtoupper($operator) == 'NOT IN')
                 $string .= "$key $operator $val";
                 else
@@ -193,8 +197,7 @@ class Database
         {
             foreach($values as $key => $value)
             {
-                if($this->type == 'mysqli')
-                    $value = $this->connection->real_escape_string($value);
+                $value = $this->connection->real_escape_string($value);
                 if(in_array($value,$this->without_quote))
                 $string .= "$key=$value";
                 else
@@ -216,7 +219,6 @@ class Database
         {
             foreach($order as $key => $value)
             {
-                if($this->type == 'mysqli')
                 $value = $this->connection->real_escape_string($value);
                 $string .= "$key $value";
                 $last_iteration = !(--$count_order);
