@@ -2,6 +2,7 @@
 
 $menu = require '../config/menu.php';
 $icon_menu = require '../config/icon_menu.php';
+$tablefields = require '../config/tablefields.php';
 
 return [
     'base_url' => 'http://localhost:8080',
@@ -22,5 +23,6 @@ return [
     'menu' => [
         'menu' => $menu,
         'icon' => $icon_menu
-    ]
+    ],
+    'fields' => $tablefields
 ];
