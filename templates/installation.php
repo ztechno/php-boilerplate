@@ -29,7 +29,7 @@
                 <div class="card full-height">
                     <div class="card-body">
                         <center>
-                            <img src="assets/img/main-logo.png" width="150px" height="100px" alt="logo" style="object-fit:cover;">
+                            <img src="assets/img/main-logo.png" width="150px" height="100px" alt="logo" style="object-fit:contain;">
                         </center>
                         <div class="card-title text-center">Form Instalasi</div>
 

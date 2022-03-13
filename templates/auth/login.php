@@ -36,7 +36,7 @@
                 <div class="card full-height">
                     <div class="card-body">
                         <center>
-                            <img src="assets/img/main-logo.png" width="150px" height="100px" alt="logo" style="object-fit:cover;">
+                            <img src="assets/img/main-logo.png" width="150px" height="100px" alt="logo" style="object-fit:contain;">
                         </center>
                         <div class="card-title text-center">Login Form</div>
                         <div class="card-category text-center">Masukkan Username dan Password anda pada bidang di bawah ini.</div>
