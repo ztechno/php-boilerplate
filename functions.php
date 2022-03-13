@@ -1,6 +1,7 @@
 <?php
 
 require '../libs/JwtAuth.php';
+require '../libs/Form.php';
 require '../libs/ArrayHelper.php';
 require '../libs/Session.php';
 require '../libs/Database.php';
