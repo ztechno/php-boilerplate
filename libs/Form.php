@@ -82,10 +82,7 @@ class Form
                 ]);
                 return $data->{$obj_array[2]};
             }
-            else
-            {
-                return $index;
-            }
         }
+        return $index;
     }
 }
