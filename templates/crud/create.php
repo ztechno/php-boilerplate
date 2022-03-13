@@ -28,6 +28,7 @@
                                         $field_data = $field;
                                         $field = $key;
                                         $label = $field_data['label'];
+                                        if(isset($field_data['type']))
                                         $type  = $field_data['type'];
                                     }
                                     $label = _ucwords($label);
