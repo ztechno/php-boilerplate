@@ -10,8 +10,10 @@ $files = [
 
 foreach($files as $file)
 {
-    $content = file_get_contents('config/'.$file.'.example');
-    file_put_contents('config/'.$file.'.php', $content);
+    if(!file_exists('config/'.$file.'.php'))
+    {
+        copy('config/'.$file.'.example','config/'.$file.'.php');
+    }
 }
 
 echo "Init Config File Success\n";
