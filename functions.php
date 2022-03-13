@@ -422,3 +422,11 @@ function count_total($items)
 
     return $total;
 }
+
+function _ucwords($str)
+{
+    $str = str_replace('_',' ',$str);
+    $str = str_replace('-',' ',$str);
+
+    return ucwords($str);
+}
