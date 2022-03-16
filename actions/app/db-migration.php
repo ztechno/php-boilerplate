@@ -5,10 +5,11 @@ $db    = new Database($conn);
 
 $files = preg_grep('~^migration-.*\.sql$~', scandir("../migrations"));
 
+
 if(!empty($files))
 {
     $all_migrations = $db->all('migrations',[
-        'filename' => ['in','('.implode(',',$files).')']
+        'filename' => ['in','("'.implode('","',$files).'")']
     ]);
 
     $all_migrations = array_map(function($migration){
@@ -19,8 +20,8 @@ if(!empty($files))
     {
         if(in_array($file, $all_migrations)) continue;
 
-        $myfile = fopen($file, "r") or die("Unable to open file!");
-        $query  = fread($myfile,filesize($file));
+        $myfile = fopen("../migrations/".$file, "r") or die("Unable to open file!");
+        $query  = fread("../migrations/".$myfile,filesize("../migrations/".$file));
         fclose($myfile);
         
         $db->query = $query;

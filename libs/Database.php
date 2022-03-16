@@ -175,8 +175,9 @@ class Database
                     $operator = $value[0];
                     $val = $value[1];
                 }
-                $val = $this->connection->real_escape_string($val);
-                if(in_array($val,$this->without_quote) || strtoupper($operator) == 'NOT IN')
+                if(!in_array(strtoupper($operator),['NOT IN','IN']))
+                    $val = $this->connection->real_escape_string($val);
+                if(in_array($val,$this->without_quote) || in_array(strtoupper($operator),['NOT IN','IN']))
                 $string .= "$key $operator $val";
                 else
                 $string .= "$key $operator '$val'";
