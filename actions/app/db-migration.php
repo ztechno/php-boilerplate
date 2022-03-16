@@ -21,7 +21,7 @@ if(!empty($files))
         if(in_array($file, $all_migrations)) continue;
 
         $myfile = fopen("../migrations/".$file, "r") or die("Unable to open file!");
-        $query  = fread("../migrations/".$myfile,filesize("../migrations/".$file));
+        $query  = fread($myfile,filesize("../migrations/".$file));
         fclose($myfile);
         
         $db->query = $query;
