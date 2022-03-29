@@ -23,6 +23,30 @@ class JwtAuth
         return json_decode($payload);
     }
 
+    function generate_jwt($headers, $payload, $secret) {
+        $headers_encoded = $this->base64url_encode(json_encode($headers));
+        
+        $payload_encoded = $this->base64url_encode(json_encode($payload));
+        
+        $signature = hash_hmac('SHA256', "$headers_encoded.$payload_encoded", $secret, true);
+        $signature_encoded = $this->base64url_encode($signature);
+        
+        $jwt = "$headers_encoded.$payload_encoded.$signature_encoded";
+        
+        return $jwt;
+    }
+
+    function base64url_encode($str) {
+        return rtrim(strtr(base64_encode($str), '+/', '-_'), '=');
+    }
+
+    function generate($payload)
+    {
+        $headers = array('alg'=>'HS256','typ'=>'JWT');
+        $secret  = config('jwt_secret');
+        return $this->generate_jwt($headers, $payload, $secret);
+    }
+
     // static function is_valid($jwt, $secret = 'secret') {
     //     $decode = self::decode($jwt, $secret);
     
