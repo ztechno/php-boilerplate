@@ -39,7 +39,6 @@
                                 </div>
                                 <?php endforeach ?>
                                 <div class="form-group">
-                                <div class="form-group">
                                     <button class="btn btn-primary">Submit</button>
                                 </div>
                             </form>

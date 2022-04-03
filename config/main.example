@@ -24,5 +24,6 @@ return [
         'menu' => $menu,
         'icon' => $icon_menu
     ],
-    'fields' => $tablefields
+    'fields' => $tablefields,
+    'pretty_url' => false
 ];

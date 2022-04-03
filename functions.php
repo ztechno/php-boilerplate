@@ -5,6 +5,8 @@ require '../libs/Form.php';
 require '../libs/ArrayHelper.php';
 require '../libs/Session.php';
 require '../libs/Database.php';
+require '../libs/Ipaymu.php';
+require '../libs/WaBlast.php';
 
 $config = require '../config/main.php';
 
@@ -72,7 +74,7 @@ function generated_menu($user_id)
                 if(!$active)
                     $active = startWith($r, $start_route);
                 $dropdown .= '<li class="'.(startWith($r, $start_route)?'active':'').'">
-                                <a href="index.php?r='.$submenu.'">
+                                <a href="'.routeTo().$submenu.'">
                                     <span class="sub-item">'.ucwords($label).'</span>
                                 </a>
                             </li>';
@@ -99,7 +101,7 @@ function generated_menu($user_id)
             $start_route = str_replace('/index','',$route);
             $active = startWith($r, $start_route);
             $generated .= '<li class="nav-item '.($active?'active':'').'">
-                                <a href="index.php?r='.$route.'">
+                                <a href="'.routeTo().$route.'">
                                     <i class="'.$icon[$key].'"></i>
                                     <p>'.ucwords($key).'</p>
                                 </a>
@@ -135,10 +137,34 @@ function is_allowed($path, $user_id)
     return $ret;
 }
 
+function in_route($route, $collections)
+{
+    $ret = false;
+    foreach($collections as $collection)
+    {
+        if(endsWith($collection, '*'))
+        {
+            $route_path = str_replace('*','',$collection);
+            if(startWith($route, $route_path))
+            {
+                $ret = true;
+                break;
+            }
+        }
+        elseif($route == $collection)
+        {
+            $ret = true;
+            break;
+        }
+    }
+
+    return $ret;
+}
+
 function config($key = false)
 {
     global $config;
-    if($key) return $config[$key];
+    if($key) return $config[$key] ?? false;
     return $config;
 }
 
@@ -222,6 +248,24 @@ function startWith($str, $compare)
     return substr($str, 0, strlen($compare)) === $compare;
 }
 
+function routeTo($path = false, $param = [], $force_pretty = false)
+{
+    $pretty = $force_pretty ?? config('pretty_url');
+    $base_url = base_url();
+    if($param)
+    {
+        $param = http_build_query($param);
+        $param = $pretty ? '?'.$param : '&'.$param;
+    }
+    else
+    {
+        $param = '';
+    }
+    if($pretty)
+        return $base_url.'/'.$path.$param;
+    return $base_url.'/index.php?r='.$path.$param;
+}
+
 function base_url()
 {
     return url(); // config('base_url');
@@ -285,7 +329,8 @@ function request($method = false)
 
 function get_route()
 {
-    return $_GET['r']??config('default_page');
+    $route = $_SERVER['REQUEST_URI'] != '/' ? trim($_SERVER['REQUEST_URI'],'/') : ($_GET['r'] ?? false);
+    return !$route?config('default_page'):$route;
 }
 
 function startsWith( $haystack, $needle ) {
@@ -429,4 +474,9 @@ function _ucwords($str)
     $str = str_replace('-',' ',$str);
 
     return ucwords($str);
+}
+
+function is_route($route)
+{
+    return get_route() == $route;
 }
