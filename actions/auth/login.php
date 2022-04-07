@@ -16,12 +16,12 @@ if(request() == 'POST')
     if($user)
     {
         Session::set(['user_id'=>$user->id]);
-        header('location:index.php');
+        header('location:'.routeTo());
         die();
     }
 
     set_flash_msg(['error'=>'Login Gagal! Nama Pengguna atau Kata Sandi tidak cocok']);
-    header('location:index.php');
+    header('location:'.routeTo());
     die();
 }
 

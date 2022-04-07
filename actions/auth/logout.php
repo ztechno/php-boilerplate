@@ -1,5 +1,5 @@
 <?php
 
 Session::destroy();
-header('location:index.php');
+header('location:'.routeTo());
 die();
