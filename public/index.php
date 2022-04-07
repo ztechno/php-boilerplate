@@ -9,7 +9,10 @@ require '../functions.php';
 $beforeAction = require '../before-actions/index.php';
 if($beforeAction)
 {
+    $uri = parse_url($_SERVER['REQUEST_URI'])['path'];
     $page = config('default_page');
+    
+    $page = $uri == '/' ? $page : $uri;
 
     if(isset($_GET['r'])) // r stand for route
     {

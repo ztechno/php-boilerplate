@@ -248,7 +248,7 @@ function startWith($str, $compare)
 
 function routeTo($path = false, $param = [], $force_pretty = false)
 {
-    $pretty = $force_pretty ?? config('pretty_url');
+    $pretty = $force_pretty ?: config('pretty_url');
     $base_url = base_url();
     if($param)
     {
