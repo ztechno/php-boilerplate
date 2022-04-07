@@ -5,8 +5,6 @@ require '../libs/Form.php';
 require '../libs/ArrayHelper.php';
 require '../libs/Session.php';
 require '../libs/Database.php';
-require '../libs/Ipaymu.php';
-require '../libs/WaBlast.php';
 
 $config = require '../config/main.php';
 
@@ -329,7 +327,11 @@ function request($method = false)
 
 function get_route()
 {
-    $route = $_SERVER['REQUEST_URI'] != '/' ? trim($_SERVER['REQUEST_URI'],'/') : ($_GET['r'] ?? false);
+    $route = false;
+    if(isset($_GET['r']))
+        $route = $_GET['r'];
+    else
+        $route = $_SERVER['REQUEST_URI'] != '/' ? trim($_SERVER['REQUEST_URI'],'/') : false;
     return !$route?config('default_page'):$route;
 }
 
