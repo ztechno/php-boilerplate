@@ -98,6 +98,21 @@ class Database
         return $this->exec();
     }
 
+    function exists($table, $clause = [], $order = [])
+    {
+        $this->table = $table;
+        $conn = $this->connection;
+        $this->query = "SELECT * FROM $table";
+        $string = $this->build_clause($clause);
+        $string_order = $this->build_order($order);
+        if($string)
+            $this->query .= ' WHERE '.$string;
+        
+        if($string_order)
+            $this->query .= ' ORDER BY '.$string_order;
+        return $this->exec('exists');
+    }
+
     function truncate($table)
     {
         $this->table = $table;
@@ -126,6 +141,8 @@ class Database
                     return $query_result->fetchAll(PDO::FETCH_OBJ);
                 if($type == 'single')
                     return $query_result->fetchObject();
+                if($type == 'exists')
+                    return count($query_result->fetchAll(PDO::FETCH_OBJ));
             }
         }
         else
@@ -140,6 +157,8 @@ class Database
                     return json_decode(json_encode($query_result->fetch_all(MYSQLI_ASSOC)));
                 if($type == 'single')
                     return $query_result->fetch_object();
+                if($type == 'exists')
+                    return $query_result->num_rows();
                 if(in_array($type,['insert','update']))
                 {
                     $last_id = $this->connection->insert_id;

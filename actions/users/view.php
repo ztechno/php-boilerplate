@@ -30,7 +30,7 @@ if(request() == 'POST')
     $db->insert('user_roles',$_POST['roles']);
 
     set_flash_msg(['success'=>'Role pada pengguna berhasil diupdate']);
-    header('location:index.php?r=users/view&id='.$_GET['id']);
+    header('location:'.routeTo('users/view',['id'=>$_GET['id']]));
 }
 
 return compact('data','roles','user_roles','success_msg');

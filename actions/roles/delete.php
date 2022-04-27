@@ -8,5 +8,5 @@ $db->delete('roles',[
 ]);
 
 set_flash_msg(['success'=>'Role berhasil dihapus']);
-header('location:index.php?r=roles/index');
+header('location:'.routeTo('roles/index'));
 die();

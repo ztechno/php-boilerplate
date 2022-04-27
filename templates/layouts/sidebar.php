@@ -4,7 +4,7 @@
         <div class="sidebar-content">
             <div class="user">
                 <div class="avatar-sm float-left mr-2">
-                    <img src="assets/img/user-placeholder.png" alt="..." class="avatar-img rounded-circle">
+                    <img src="<?= routeTo('assets/img/user-placeholder.png')?>" alt="..." class="avatar-img rounded-circle">
                 </div>
                 <div class="info">
                     <a href="">

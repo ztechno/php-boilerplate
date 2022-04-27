@@ -33,7 +33,6 @@ class Form
                 $lists .= "<option value=''>- Pilih -</option>";
                 foreach($options as $option)
                 {
-                    if($_GET['r'] == 'workunits/edit' && $option->{$obj_array[1]}==$_GET['id']) continue;
                     $lists .= "<option value='".$option->{$obj_array[1]}."' ".($option->{$obj_array[1]}==$value?'selected=""':'').">".$option->{$obj_array[2]}."</option>";
                 }
             }

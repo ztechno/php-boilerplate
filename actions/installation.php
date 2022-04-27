@@ -31,7 +31,7 @@ if(request() == 'POST')
     ]);
 
     set_flash_msg(['success'=>'Instalasi Berhasil']);
-    header('location:index.php?r=auth/login');
+    header('location:'.routeTo('auth/login'));
     die();
 
 }

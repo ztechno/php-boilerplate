@@ -8,5 +8,5 @@ $db->delete('users',[
 ]);
 
 set_flash_msg(['success'=>'Pengguna berhasil dihapus']);
-header('location:index.php?r=users/index');
+header('location:'.routeTo('users/index'));
 die();

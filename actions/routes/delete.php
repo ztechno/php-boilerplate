@@ -12,5 +12,5 @@ $db->delete('role_routes',[
 ]);
 
 set_flash_msg(['success'=>'Rute pada Role berhasil dihapus']);
-header('location:index.php?r=roles/view&id='.$route->role_id);
+header('location:'.routeTo('roles/view',['id'=>$route->role_id]));
 die();

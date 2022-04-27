@@ -2,7 +2,7 @@
 
 $conn = conn();
 $db   = new Database($conn);
-
+Page::set_title('Lihat Peran');
 $data = $db->single('roles',[
     'id' => $_GET['id']
 ]);
@@ -18,7 +18,7 @@ if(request() == 'POST')
     $db->insert('role_routes',$_POST['routes']);
 
     set_flash_msg(['success'=>'Rute pada Role berhasil diupdate']);
-    header('location:index.php?r=roles/view&id='.$_GET['id']);
+    header('location:'.routeTo('roles/view',['id'=>$_GET['id']]));
 }
 
 return compact('data','routes','success_msg');

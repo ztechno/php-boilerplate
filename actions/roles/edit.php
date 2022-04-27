@@ -2,7 +2,7 @@
 
 $conn = conn();
 $db   = new Database($conn);
-
+Page::set_title('Edit Peran');
 $data = $db->single('roles',[
     'id' => $_GET['id']
 ]);
@@ -14,7 +14,7 @@ if(request() == 'POST')
     ]);
 
     set_flash_msg(['success'=>'Role berhasil diupdate']);
-    header('location:index.php?r=roles/index');
+    header('location:'.routeTo('roles/index'));
 }
 
 return [

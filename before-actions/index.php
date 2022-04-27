@@ -19,20 +19,20 @@ $db    = new Database($conn);
 $installation = $db->single('application');
 if(!$installation && $route != "installation")
 {
-    header("location:index.php?r=installation");
+    header("location:".routeTo('installation'));
     die();
 }
 
 $auth = auth();
 if(!isset($auth->user) && !in_array($route, ['auth/login','installation']))
 {
-    header("location:index.php?r=auth/login");
+    header("location:".routeTo('auth/login'));
     die();
 }
 
 if(isset($auth->user) && !isset($auth->user->id) && $route != 'auth/logout')
 {
-    header("location:index.php?r=auth/logout");
+    header("location:".routeTo('auth/logout'));
     die();
 }
 

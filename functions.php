@@ -5,6 +5,8 @@ require '../libs/Form.php';
 require '../libs/ArrayHelper.php';
 require '../libs/Session.php';
 require '../libs/Database.php';
+require '../libs/Page.php';
+require '../libs/Validation.php';
 
 $config = require '../config/main.php';
 
@@ -70,7 +72,7 @@ function generated_menu($user_id)
                 $allowed = true;
                 $start_route = str_replace('/index','',$submenu);
                 if(!$active)
-                    $active = startWith($r, $start_route);
+                    $active = startWith($r, $start_route)||(isset($_GET['table'])&&$_GET['table']==$key);;
                 $dropdown .= '<li class="'.(startWith($r, $start_route)?'active':'').'">
                                 <a href="'.routeTo().$submenu.'">
                                     <span class="sub-item">'.ucwords($label).'</span>
@@ -97,7 +99,7 @@ function generated_menu($user_id)
         {
             if(!is_allowed($route,$user_id)) continue;
             $start_route = str_replace('/index','',$route);
-            $active = startWith($r, $start_route);
+            $active = startWith($r, $start_route)||(isset($_GET['table'])&&$_GET['table']==$key);;
             $generated .= '<li class="nav-item '.($active?'active':'').'">
                                 <a href="'.routeTo().$route.'">
                                     <i class="'.$icon[$key].'"></i>
@@ -248,7 +250,7 @@ function startWith($str, $compare)
 
 function routeTo($path = false, $param = [], $force_pretty = false)
 {
-    $pretty = $force_pretty ?: config('pretty_url');
+    $pretty = $force_pretty == true ? $force_pretty : config('pretty_url');
     $base_url = base_url();
     if($param)
     {
@@ -260,7 +262,9 @@ function routeTo($path = false, $param = [], $force_pretty = false)
         $param = '';
     }
     if($pretty)
+    {
         return $base_url.'/'.$path.$param;
+    }
     return $base_url.'/index.php?r='.$path.$param;
 }
 
@@ -481,4 +485,20 @@ function _ucwords($str)
 function is_route($route)
 {
     return get_route() == $route;
+}
+
+function get_title()
+{
+    $title = Page::get_title() ?? app('name');
+    return $title;
+}
+
+function redirectBack($message = [])
+{
+    if($message)
+    {
+        set_flash_msg($message);
+        header('location:'.$_SERVER['HTTP_REFERER']);
+        die();
+    }
 }

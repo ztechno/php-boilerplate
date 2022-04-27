@@ -12,5 +12,5 @@ $db->delete('user_roles',[
 ]);
 
 set_flash_msg(['success'=>'Role pada pengguna berhasil dihapus']);
-header('location:index.php?r=users/view&id='.$route->user_id);
+header('location:'.routeTo('users/view',['id'=>$route->user_id]));
 die();

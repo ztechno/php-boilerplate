@@ -13,7 +13,7 @@ if(request() == 'POST')
     ]);
 
     set_flash_msg(['success'=>'Detail Aplikasi berhasil diupdate']);
-    header('location:index.php?r=application/index');
+    header('location:'.routeTo('application/index'));
     die();
 }
 

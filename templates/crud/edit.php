@@ -8,7 +8,7 @@
                         <h5 class="text-white op-7 mb-2">Memanajemen data <?=_ucwords($table)?></h5>
                     </div>
                     <div class="ml-md-auto py-2 py-md-0">
-                        <a href="index.php?r=crud/index&table=<?=$table?>" class="btn btn-warning btn-round">Kembali</a>
+                        <a href="<?=routeTo('crud/index',['table'=>$table])?>" class="btn btn-warning btn-round">Kembali</a>
                     </div>
                 </div>
             </div>
@@ -18,6 +18,9 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
+                            <?php if($error_msg): ?>
+                            <div class="alert alert-danger"><?=$error_msg?></div>
+                            <?php endif ?>
                             <form action="" method="post">
                                 <?php 
                                 foreach(config('fields')[$table] as $key => $field): 
@@ -35,7 +38,7 @@
                                 ?>
                                 <div class="form-group">
                                     <label for=""><?=$label?></label>
-                                    <?= Form::input($type, $table."[".$field."]", ['class'=>"form-control","placeholder"=>$label,"required"=>"","value"=>$data->{$field}]) ?>
+                                    <?= Form::input($type, $table."[".$field."]", ['class'=>"form-control","placeholder"=>$label,"value"=>$old[$field]??$data->{$field}]) ?>
                                 </div>
                                 <?php endforeach ?>
                                 <div class="form-group">

@@ -8,7 +8,7 @@
                         <h5 class="text-white op-7 mb-2">Memanajemen data <?=_ucwords($table)?></h5>
                     </div>
                     <div class="ml-md-auto py-2 py-md-0">
-                        <a href="index.php?r=crud/create&table=<?=$table?>" class="btn btn-secondary btn-round">Buat <?=_ucwords($table)?></a>
+                        <a href="<?=routeTo('crud/create',['table'=>$table])?>" class="btn btn-secondary btn-round">Buat <?=_ucwords($table)?></a>
                     </div>
                 </div>
             </div>
@@ -65,8 +65,8 @@
                                             <td><?=$data_value?></td>
                                             <?php endforeach ?>
                                             <td>
-                                                <a href="index.php?r=crud/edit&table=<?=$table?>&id=<?=$data->id?>" class="btn btn-sm btn-warning"><i class="fas fa-pencil-alt"></i> Edit</a>
-                                                <a href="index.php?r=crud/delete&table=<?=$table?>&id=<?=$data->id?>" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> Hapus</a>
+                                                <a href="<?=routeTo('crud/edit',['table'=>$table,'id'=>$data->id])?>" class="btn btn-sm btn-warning"><i class="fas fa-pencil-alt"></i> Edit</a>
+                                                <a href="<?=routeTo('crud/delete',['table'=>$table,'id'=>$data->id])?>" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> Hapus</a>
                                             </td>
                                         </tr>
                                         <?php endforeach ?>
