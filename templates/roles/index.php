@@ -8,7 +8,7 @@
                         <h5 class="text-white op-7 mb-2">Memanajemen fitur - fitur yang dapat di akses oleh peran tertentu untuk setiap pengguna</h5>
                     </div>
                     <div class="ml-md-auto py-2 py-md-0">
-                        <a href="index.php?r=roles/create" class="btn btn-secondary btn-round">Buat Role</a>
+                        <a href="<?=routeTo('roles/create')?>" class="btn btn-secondary btn-round">Buat Role</a>
                     </div>
                 </div>
             </div>
@@ -39,9 +39,9 @@
                                             </td>
                                             <td><?=$data->name?></td>
                                             <td>
-                                                <a href="index.php?r=roles/view&id=<?=$data->id?>" class="btn btn-sm btn-success"><i class="fas fa-eye"></i> Lihat</a>
-                                                <a href="index.php?r=roles/edit&id=<?=$data->id?>" class="btn btn-sm btn-warning"><i class="fas fa-pencil-alt"></i> Edit</a>
-                                                <a href="index.php?r=roles/delete&id=<?=$data->id?>" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> Hapus</a>
+                                                <a href="<?=routeTo('roles/view',['id'=>$data->id])?>" class="btn btn-sm btn-success"><i class="fas fa-eye"></i> Lihat</a>
+                                                <a href="<?=routeTo('roles/edit',['id'=>$data->id])?>" class="btn btn-sm btn-warning"><i class="fas fa-pencil-alt"></i> Edit</a>
+                                                <a href="<?=routeTo('roles/delete',['id'=>$data->id])?>" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> Hapus</a>
                                             </td>
                                         </tr>
                                         <?php endforeach ?>

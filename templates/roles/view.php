@@ -8,7 +8,7 @@
                         <h5 class="text-white op-7 mb-2">Memanajemen fitur - fitur yang dapat di akses oleh peran tertentu untuk setiap pengguna</h5>
                     </div>
                     <div class="ml-md-auto py-2 py-md-0">
-                        <a href="index.php?r=roles/index" class="btn btn-warning btn-round">Kembali</a>
+                        <a href="<?=routeTo('roles/index')?>" class="btn btn-warning btn-round">Kembali</a>
                     </div>
                 </div>
             </div>
@@ -59,7 +59,7 @@
                                             </td>
                                             <td><?=$route->route_path?></td>
                                             <td>
-                                                <a href="index.php?r=routes/delete&id=<?=$route->id?>" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> Hapus</a>
+                                                <a href="<?=routeTo('routes/delete',['id'=>$route->id])?>" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> Hapus</a>
                                             </td>
                                         </tr>
                                         <?php endforeach ?>

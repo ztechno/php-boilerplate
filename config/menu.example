@@ -1,10 +1,10 @@
 <?php
 
 return [
-    'dashboard' => routeTo('default/index'),
+    'dashboard' => 'default/index',
     'pengguna'  => [
-        'semua pengguna' => routeTo('users/index'),
-        'roles' => routeTo('roles/index')
+        'semua pengguna' => 'users/index',
+        'roles' => 'roles/index'
     ],
-    'pengaturan' => routeTo('application/index')
+    'pengaturan' => 'application/index'
 ];

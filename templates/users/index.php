@@ -8,7 +8,7 @@
                         <h5 class="text-white op-7 mb-2">Memanajemen data pengguna</h5>
                     </div>
                     <div class="ml-md-auto py-2 py-md-0">
-                        <a href="index.php?r=users/create" class="btn btn-secondary btn-round">Buat Pengguna</a>
+                        <a href="<?=routeTo('users/create')?>" class="btn btn-secondary btn-round">Buat Pengguna</a>
                     </div>
                 </div>
             </div>
@@ -41,9 +41,9 @@
                                             <td><?=$data->name?></td>
                                             <td><?=$data->username?></td>
                                             <td>
-                                                <a href="index.php?r=users/view&id=<?=$data->id?>" class="btn btn-sm btn-success"><i class="fas fa-eye"></i> Lihat</a>
-                                                <a href="index.php?r=users/edit&id=<?=$data->id?>" class="btn btn-sm btn-warning"><i class="fas fa-pencil-alt"></i> Edit</a>
-                                                <a href="index.php?r=users/delete&id=<?=$data->id?>" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> Hapus</a>
+                                                <a href="<?=routeTo('users/view',['id'=>$data->id])?>" class="btn btn-sm btn-success"><i class="fas fa-eye"></i> Lihat</a>
+                                                <a href="<?=routeTo('users/edit',['id'=>$data->id])?>" class="btn btn-sm btn-warning"><i class="fas fa-pencil-alt"></i> Edit</a>
+                                                <a href="<?=routeTo('users/delete',['id'=>$data->id])?>" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> Hapus</a>
                                             </td>
                                         </tr>
                                         <?php endforeach ?>
