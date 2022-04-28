@@ -3,6 +3,7 @@
 // all config files
 $files = [
     'icon_menu',
+    'lang',
     'main',
     'menu',
     'tablefields'

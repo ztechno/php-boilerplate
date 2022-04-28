@@ -335,7 +335,10 @@ function get_route()
     if(isset($_GET['r']))
         $route = $_GET['r'];
     else
-        $route = $_SERVER['REQUEST_URI'] != '/' ? trim($_SERVER['REQUEST_URI'],'/') : false;
+    {
+        $request_uri = strtok($_SERVER["REQUEST_URI"], '?');
+        $route = $request_uri != '/' ? trim($request_uri,'/') : false;
+    }
     return !$route?config('default_page'):$route;
 }
 
@@ -498,7 +501,14 @@ function redirectBack($message = [])
     if($message)
     {
         set_flash_msg($message);
-        header('location:'.$_SERVER['HTTP_REFERER']);
+        $url = $_SERVER['HTTP_REFERER']??base_url();
+        header('location:'.$url);
         die();
     }
+}
+
+function __($key)
+{
+    $lang = config('lang');
+    return $lang[$key] ?? $key;
 }

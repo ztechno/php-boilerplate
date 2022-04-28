@@ -158,7 +158,7 @@ class Database
                 if($type == 'single')
                     return $query_result->fetch_object();
                 if($type == 'exists')
-                    return $query_result->num_rows();
+                    return $query_result->num_rows;
                 if(in_array($type,['insert','update']))
                 {
                     $last_id = $this->connection->insert_id;

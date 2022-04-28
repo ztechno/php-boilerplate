@@ -3,6 +3,7 @@
 $menu = require '../config/menu.php';
 $icon_menu = require '../config/icon_menu.php';
 $tablefields = require '../config/tablefields.php';
+$lang = require '../config/lang.php';
 
 return [
     'base_url' => 'http://localhost:8080',

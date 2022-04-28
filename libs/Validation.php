@@ -23,14 +23,14 @@ class Validation
     {
         if(!isset($data[$key]))
         {
-            return ['status' => false, 'message' => $key . ' doesn\'t exists'];
+            return ['status' => false, 'message' => __($key) . ' doesn\'t exists'];
         }
         
         if($rule == 'required')
         {
             if(!isset($data[$key]) || empty($data[$key]))
             {
-                return ['status' => false, 'message' => $key . ' field is required'];
+                return ['status' => false, 'message' => __($key) . ' field is required'];
             }
         }
 
@@ -38,7 +38,7 @@ class Validation
         {
             if(!is_numeric($data[$key]))
             {
-                return ['status' => false, 'message' => $key . ' field must be a number'];
+                return ['status' => false, 'message' => __($key) . ' field must be a number'];
             }
         }
 
@@ -46,7 +46,7 @@ class Validation
         {
             if(!is_array($data[$key]))
             {
-                return ['status' => false, 'message' => $key . ' field must be an array'];
+                return ['status' => false, 'message' => __($key) . ' field must be an array'];
             }
         }
 
@@ -58,7 +58,7 @@ class Validation
 
             if(!in_array($data[$key]))
             {
-                return ['status' => false, 'message' => $key . ' field must be in '. $in[1]];
+                return ['status' => false, 'message' => __($key) . ' field must be in '. $in[1]];
             }
         }
 
@@ -69,7 +69,7 @@ class Validation
 
             if(strlen($data[$key]) < $min)
             {
-                return ['status' => false, 'message' => $key . ' field minimum length is '. $min];
+                return ['status' => false, 'message' => __($key) . ' field minimum length is '. $min];
             }
         }
 
@@ -80,7 +80,7 @@ class Validation
 
             if(strlen($data[$key]) > $max)
             {
-                return ['status' => false, 'message' => $key . ' field maximum length is '. $max];
+                return ['status' => false, 'message' => __($key) . ' field maximum length is '. $max];
             }
         }
 
@@ -89,24 +89,27 @@ class Validation
             $exists = explode(':', $rule);
             $clause = $exists[1];
             $clause = explode(',',$clause);
-            $tablename = $exists[0];
+            $tablename = $clause[0];
+
+            unset($clause[0]); // remove item at index 0
+            $clause = array_values($clause); // 'reindex' array
 
             $_clause = [];
-            foreach($clause as $key => $c)
+            foreach($clause as $k => $c)
             {
-                $n = $key+1;
+                $n = $k+1;
                 if($n%2==0) continue;
                 $_clause[$c] = $clause[$n];
             }
 
             $conn = conn();
-            $database = new Database($conn);
+            $db   = new Database($conn);
 
             $data = $db->exists($tablename,$_clause);
             
             if(!$data || empty($data))
             {
-                return ['status' => false, 'message' => $key . ' field doesn\'t valid'];
+                return ['status' => false, 'message' => __($key) . ' field doesn\'t valid'];
             }
         }
 
