@@ -6,8 +6,9 @@ $tablefields = require '../config/tablefields.php';
 $lang = require '../config/lang.php';
 
 return [
+    'env'      => 'dev',
     'base_url' => 'http://localhost:8080',
-    'default_page' => 'default/index',
+    'base_path' => '/',
     'database' => [
         'driver'   => 'PDO',
         'host'     => 'localhost',
