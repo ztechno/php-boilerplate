@@ -13,8 +13,10 @@ if($beforeAction)
     $base_path = config('base_path');
     
     $uri = parse_url($_SERVER['REQUEST_URI'])['path'];
-    $uri = ltrim($uri, $base_path);
+    
+    if(startWith($uri, $base_path)) $uri = substr($uri, strlen($base_path));
     $uri = $uri == "" ? "/" : $uri;
+    
     
     $page = $uri == '/' ? $page : $uri;
 
