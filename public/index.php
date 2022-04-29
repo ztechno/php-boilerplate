@@ -10,13 +10,8 @@ $beforeAction = require '../before-actions/index.php';
 if($beforeAction)
 {
     $page = config('default_page');
-    $base_path = config('base_path');
     
-    $uri = parse_url($_SERVER['REQUEST_URI'])['path'];
-    
-    if(startWith($uri, $base_path)) $uri = substr($uri, strlen($base_path));
-    $uri = $uri == "" ? "/" : $uri;
-    
+    $uri = get_route();
     
     $page = $uri == '/' ? $page : $uri;
 

@@ -336,7 +336,14 @@ function get_route()
         $route = $_GET['r'];
     else
     {
-        $request_uri = strtok($_SERVER["REQUEST_URI"], '?');
+        $base_path = config('base_path');
+    
+        $uri = parse_url($_SERVER['REQUEST_URI'])['path'];
+        
+        if(startWith($uri, $base_path)) $uri = substr($uri, strlen($base_path));
+        
+        $request_uri = strtok($uri, '?');
+        
         $route = $request_uri != '/' ? trim($request_uri,'/') : false;
     }
     return !$route?config('default_page'):$route;
