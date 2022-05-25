@@ -9,6 +9,7 @@ return [
     'env'      => 'dev',
     'base_url' => 'http://localhost:8080',
     'base_path' => '/',
+    'default_page' => 'default/index',
     'database' => [
         'driver'   => 'PDO',
         'host'     => 'localhost',
