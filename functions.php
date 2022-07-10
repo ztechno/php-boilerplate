@@ -519,3 +519,8 @@ function __($key)
     $lang = config('lang');
     return $lang[$key] ?? $key;
 }
+
+function asset($file)
+{
+    return url() . '/' .$file;
+}

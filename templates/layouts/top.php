@@ -4,14 +4,14 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<title><?=get_title()?></title>
 	<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
-	<link rel="icon" href="<?=routeTo('assets/img/main-logo.png')?>" type="image/x-icon"/>
+	<link rel="icon" href="<?=asset('assets/img/main-logo.png')?>" type="image/x-icon"/>
 
 	<!-- Fonts and icons -->
-	<script src="<?=routeTo('assets/js/plugin/webfont/webfont.min.js')?>"></script>
+	<script src="<?=asset('assets/js/plugin/webfont/webfont.min.js')?>"></script>
 	<script>
 		WebFont.load({
 			google: {"families":["Lato:300,400,700,900"]},
-			custom: {"families":["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"], urls: ['<?=routeTo('assets/css/fonts.min.css')?>']},
+			custom: {"families":["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"], urls: ['<?=asset('assets/css/fonts.min.css')?>']},
 			active: function() {
 				sessionStorage.fonts = true;
 			}
@@ -19,11 +19,11 @@
 	</script>
 
 	<!-- CSS Files -->
-	<link rel="stylesheet" href="<?=routeTo('assets/css/bootstrap.min.css')?>">
-	<link rel="stylesheet" href="<?=routeTo('assets/css/atlantis.min.css')?>">
+	<link rel="stylesheet" href="<?=asset('assets/css/bootstrap.min.css')?>">
+	<link rel="stylesheet" href="<?=asset('assets/css/atlantis.min.css')?>">
 
 	<!-- CSS Just for demo purpose, don't include it in your project -->
-	<link rel="stylesheet" href="<?=routeTo('assets/css/demo.css')?>">
+	<link rel="stylesheet" href="<?=asset('assets/css/demo.css')?>">
 </head>
 <body>
 	<div class="wrapper">
@@ -73,14 +73,14 @@
 						<li class="nav-item dropdown hidden-caret">
 							<a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false">
 								<div class="avatar-sm">
-									<img src="<?=routeTo('assets/img/user-placeholder.png')?>" alt="..." class="avatar-img rounded-circle">
+									<img src="<?=asset('assets/img/user-placeholder.png')?>" alt="..." class="avatar-img rounded-circle">
 								</div>
 							</a>
 							<ul class="dropdown-menu dropdown-user animated fadeIn">
 								<div class="dropdown-user-scroll scrollbar-outer">
 									<li>
 										<div class="user-box">
-											<div class="avatar-lg"><img src="<?=routeTo('assets/img/user-placeholder.png')?>" alt="image profile" class="avatar-img rounded"></div>
+											<div class="avatar-lg"><img src="<?=asset('assets/img/user-placeholder.png')?>" alt="image profile" class="avatar-img rounded"></div>
 											<div class="u-text">
 												<h4><?=auth()->user->name?></h4>
 												<p class="text-muted"><?=get_role(auth()->user->id)->name?></p>
