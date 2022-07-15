@@ -53,8 +53,17 @@ function get_allowed_routes($user_id)
 
 function generated_menu($user_id)
 {
-    $menu = config('menu')['menu'];
-    $icon = config('menu')['icon'];
+    if($user_id == 'guest')
+    {
+        $menu = config('guest_menu')['menu'];
+        $icon = config('guest_menu')['icon'];
+    }
+    else
+    {
+        $menu = config('menu')['menu'];
+        $icon = config('menu')['icon'];
+    }
+
     $generated = "";
     $r = get_route();
 
@@ -68,7 +77,7 @@ function generated_menu($user_id)
 
             foreach($route as $label => $submenu)
             {
-                if(!is_allowed($submenu,$user_id)) continue;
+                if($user_id != 'guest' && !is_allowed($submenu,$user_id)) continue;
                 $allowed = true;
                 $start_route = str_replace('/index','',$submenu);
                 if(!$active)
@@ -97,7 +106,7 @@ function generated_menu($user_id)
         }
         else
         {
-            if(!is_allowed($route,$user_id)) continue;
+            if($user_id != 'guest' && !is_allowed($route,$user_id)) continue;
             $start_route = str_replace('/index','',$route);
             $active = startWith($r, $start_route)||(isset($_GET['table'])&&$_GET['table']==$key);;
             $generated .= '<li class="nav-item '.($active?'active':'').'">
@@ -287,7 +296,9 @@ function url(){
     } else {
         $scheme = 'http';
     }
-    return $scheme.'://'.$server_name.$port;
+
+    $base_path = config('base_path');
+    return $scheme.'://'.$server_name.$port.$base_path;
 }
 
 function auth()
@@ -338,7 +349,7 @@ function get_route()
     {
         $base_path = config('base_path');
     
-        $uri = parse_url($_SERVER['REQUEST_URI'])['path'];
+        $uri = rtrim(parse_url($_SERVER['REQUEST_URI'])['path'], '/');
         
         if(startWith($uri, $base_path)) $uri = substr($uri, strlen($base_path));
         
