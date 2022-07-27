@@ -142,6 +142,16 @@ function is_allowed($path, $user_id)
             $ret = true;
             break;
         }
+        elseif(startWith($path,'crud/') && isset($_GET['table']))
+        {
+            $pretty = config('pretty_url');
+            $fullpath = $path . ($pretty ? '?' : '&') . 'table=' . $_GET['table'];
+            if($fullpath == $route_path)
+            {
+                $ret = true;
+                break;
+            }
+        }
     }
     return $ret;
 }
