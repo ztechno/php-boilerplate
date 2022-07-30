@@ -148,7 +148,11 @@ class Database
         else
         {
             if($type == 'multi_query')
-                return $this->connection->multi_query($this->query);
+            {
+                $res = $this->connection->multi_query($this->query);
+                while ($this->connection->next_result()) {;}
+                return $res;
+            }
             else
                 $query_result = $this->connection->query($this->query);
             if($query_result)
