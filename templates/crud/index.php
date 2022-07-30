@@ -8,7 +8,9 @@
                         <h5 class="text-white op-7 mb-2">Memanajemen data <?=_ucwords($table)?></h5>
                     </div>
                     <div class="ml-md-auto py-2 py-md-0">
-                        <a href="<?=routeTo('crud/create',['table'=>$table])?>" class="btn btn-secondary btn-round">Buat <?=_ucwords($table)?></a>
+                        <?php if(is_allowed(get_route_path('crud/create',['table'=>$table]),auth()->user->id)): ?>
+                            <a href="<?=routeTo('crud/create',['table'=>$table])?>" class="btn btn-secondary btn-round">Buat <?=_ucwords($table)?></a>
+                        <?php endif ?>
                     </div>
                 </div>
             </div>
@@ -53,7 +55,11 @@
                                                 if(is_array($field))
                                                 {
                                                     $label = $field['label'];
-                                                    $data_value = Form::getData($field['type'],$data->{$key});
+                                                    $data_value = Form::getData($field['type'],$data->{$key},true);
+                                                    if($field['type'] == 'number')
+                                                    {
+                                                        $data_value = number_format($data_value);
+                                                    }
                                                     $field = $key;
                                                 }
                                                 else
@@ -65,8 +71,12 @@
                                             <td><?=$data_value?></td>
                                             <?php endforeach ?>
                                             <td>
+                                            <?php if(is_allowed(get_route_path('crud/edit',['table'=>$table]),auth()->user->id)): ?>
                                                 <a href="<?=routeTo('crud/edit',['table'=>$table,'id'=>$data->id])?>" class="btn btn-sm btn-warning"><i class="fas fa-pencil-alt"></i> Edit</a>
+                                            <?php endif ?>
+                                            <?php if(is_allowed(get_route_path('crud/delete',['table'=>$table]),auth()->user->id)): ?>
                                                 <a href="<?=routeTo('crud/delete',['table'=>$table,'id'=>$data->id])?>" onclick="if(confirm('apakah anda yakin akan menghapus data ini ?')){return true}else{return false}" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> Hapus</a>
+                                            <?php endif ?>
                                             </td>
                                         </tr>
                                         <?php endforeach ?>
