@@ -16,7 +16,7 @@
                     <div class="clearfix"></div>
                 </div>
             </div>
-            <ul class="nav nav-primary">
+            <ul class="nav <?=config('theme')['sidebar_color']?>">
                 <?= generated_menu(auth()->user->id) ?>
             </ul>
         </div>

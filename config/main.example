@@ -28,5 +28,12 @@ return [
         'icon' => $icon_menu
     ],
     'fields' => $tablefields,
-    'pretty_url' => false
+    'pretty_url' => false,
+    'theme' => [
+        'header_color'     => 'blue',
+        'top_navbar_color' => 'blue2',
+        'sidebar_color'    => 'nav-primary',
+        'panel_color'      => 'bg-primary-gradient',
+        'button_main_color'=> 'btn-primary',
+    ]
 ];
