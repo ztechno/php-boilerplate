@@ -6,6 +6,10 @@ $conn = conn();
 $db   = new Database($conn);
 $error_msg = get_flash_msg('error');
 $old = get_flash_msg('old');
+$fields = config('fields')[$table];
+
+if(file_exists('../actions/'.$table.'/override-edit-fields.php'))
+    $fields = require '../actions/'.$table.'/override-edit-fields.php';
 
 $data = $db->single($table,[
     'id' => $_GET['id']
@@ -31,5 +35,6 @@ return [
     'data' => $data,
     'error_msg' => $error_msg,
     'old' => $old,
-    'table' => $table
+    'table' => $table,
+    'fields' => $fields
 ];

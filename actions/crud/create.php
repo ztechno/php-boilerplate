@@ -4,6 +4,10 @@ $table = $_GET['table'];
 Page::set_title('Tambah '.ucwords($table));
 $error_msg = get_flash_msg('error');
 $old = get_flash_msg('old');
+$fields = config('fields')[$table];
+
+if(file_exists('../actions/'.$table.'/override-create-fields.php'))
+    $fields = require '../actions/'.$table.'/override-create-fields.php';
 
 if(request() == 'POST')
 {
@@ -22,4 +26,4 @@ if(request() == 'POST')
     header('location:'.routeTo('crud/index',['table'=>$table]));
 }
 
-return compact('table','error_msg','old');
+return compact('table','error_msg','old','fields');

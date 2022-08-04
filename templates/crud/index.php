@@ -29,7 +29,7 @@
                                         <tr>
                                             <th width="20px">#</th>
                                             <?php 
-                                            foreach(config('fields')[$table] as $field): 
+                                            foreach($fields as $field): 
                                                 $label = $field;
                                                 if(is_array($field))
                                                 {
@@ -50,7 +50,7 @@
                                                 <?=$index+1?>
                                             </td>
                                             <?php 
-                                            foreach(config('fields')[$table] as $key => $field): 
+                                            foreach($fields as $key => $field): 
                                                 $label = $field;
                                                 if(is_array($field))
                                                 {

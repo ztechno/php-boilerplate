@@ -23,7 +23,7 @@
                             <?php endif ?>
                             <form action="" method="post">
                                 <?php 
-                                foreach(config('fields')[$table] as $key => $field): 
+                                foreach($fields as $key => $field): 
                                     $label = $field;
                                     $type  = "text";
                                     if(is_array($field))
