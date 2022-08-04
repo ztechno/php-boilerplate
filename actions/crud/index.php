@@ -10,10 +10,9 @@ $fields = config('fields')[$table];
 if(file_exists('../actions/'.$table.'/override-index-fields.php'))
     $fields = require '../actions/'.$table.'/override-index-fields.php';
 
+$data = $db->all($table);
 if(file_exists('../actions/'.$table.'/override-index.php'))
     $data = require '../actions/'.$table.'/override-index.php';
-else
-    $data = $db->all($table);
 
 return [
     'datas' => $data,
