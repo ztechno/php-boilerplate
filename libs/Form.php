@@ -15,6 +15,38 @@ class Form
             return self::textarea($name, $vals, $attr);
         }
 
+        if(substr($type,0,8) == 'checkbox')
+        {
+            $types = explode(':',$type);
+            $options = $types[1];
+            $vals = explode(',',$value);
+            
+            if(substr($type, 8,3) == 'obj')
+            {
+                $obj_array = explode(',',$options);
+                $options = $obj_array[0];
+
+                $conn = conn();
+                $db   = new Database($conn);
+                $datas = $db->all($options);
+                $options = $datas;
+                $group = "";
+                foreach($options as $option)
+                {
+                    $group .= self::checkbox($option->{$obj_array[2]}, $name, $option->{$obj_array[1]}, in_array($option->{$obj_array[1]},$vals));
+                }
+            }
+            else
+            {
+                $options = explode('|',$options);
+                $group = "";
+                foreach($options as $option)
+                    $group .= self::checkbox($option, $name, $option, in_array($option,$vals));
+            }
+            
+            return "<div>$group</div>";
+        }
+
         $lists = "";
         if(substr($type,0,7) == 'options')
         {
@@ -46,6 +78,11 @@ class Form
             return self::options($name, $lists, $attr);
         }
 
+        if($type == 'number')
+        {
+            $attr .= " step='any'";
+        }
+
         return self::text($type,$name,$attr);
     }
 
@@ -62,6 +99,12 @@ class Form
     static function options($name, $lists, $attr = "")
     {
         return "<select name='$name' $attr>$lists</select>";
+    }
+
+    static function checkbox($label, $name, $value, $checked = false)
+    {
+        $attr = " value='$value' ".($checked?'checked':'');
+        return "<label style='font-weight:400'>".self::text('checkbox', $name.'[]', $attr)." $label</label><br>";
     }
 
     static function getData($type, $index)
