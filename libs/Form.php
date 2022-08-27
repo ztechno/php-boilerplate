@@ -21,7 +21,7 @@ class Form
             $options = $types[1];
             $vals = explode(',',$value);
             
-            if(substr($type, 8,3) == 'obj')
+            if(substr($type, 9,3) == 'obj')
             {
                 $obj_array = explode(',',$options);
                 $options = $obj_array[0];
@@ -109,11 +109,30 @@ class Form
 
     static function getData($type, $index)
     {
+        if(!$index) return '';
         if(substr($type,0,7) == 'options')
         {
             $types = explode(':',$type);
             $options = $types[1];
             if(substr($type, 8,3) == 'obj')
+            {
+                $obj_array = explode(',',$options);
+                $options = $obj_array[0];
+
+                $conn = conn();
+                $db   = new Database($conn);
+                $data = $db->single($options,[
+                    $obj_array[1] => $index
+                ]);
+                return $data->{$obj_array[2]};
+            }
+        }
+
+        if(substr($type,0,8) == 'checkbox')
+        {
+            $types = explode(':',$type);
+            $options = $types[1];
+            if(substr($type, 9,3) == 'obj')
             {
                 $obj_array = explode(',',$options);
                 $options = $obj_array[0];
