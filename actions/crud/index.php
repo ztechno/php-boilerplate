@@ -98,12 +98,7 @@ if(isset($_GET['draw']))
     die();
 }
 
-// $data = $db->all($table);
-// if(file_exists('../actions/'.$table.'/override-index.php'))
-//     $data = require '../actions/'.$table.'/override-index.php';
-
 return [
-    'datas' => $data,
     'table' => $table,
     'success_msg' => $success_msg,
     'fields' => $fields
