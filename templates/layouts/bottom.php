@@ -59,6 +59,14 @@
 	<script src="<?=asset('assets/js/setting-demo.js')?>"></script>
 	<script src="<?=asset('assets/js/demo.js')?>"></script>
 	<script>
+		$('.datatable-crud').dataTable({
+			processing: true,
+			search: {
+				return: true
+			},
+			serverSide: true,
+			ajax: location.href
+		})
 		$('.datatable').dataTable();
 		Circles.create({
 			id:'circles-1',

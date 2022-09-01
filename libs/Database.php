@@ -189,6 +189,11 @@ class Database
 
     function build_clause($clause)
     {
+        if(is_string($clause))
+        {
+            return $clause;
+        }
+        $logic = "AND";
         $count_clause = count($clause);
         $string = "";
         if($count_clause > 0)
@@ -211,7 +216,7 @@ class Database
                 $string .= "$key $operator '$val'";
                 $last_iteration = !(--$count_clause);
                 if(!$last_iteration)
-                    $string .= ' AND ';
+                    $string .= ' '.$logic.' ';
             }
         }
 

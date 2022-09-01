@@ -24,7 +24,7 @@
                             <div class="alert alert-success"><?=$success_msg?></div>
                             <?php endif ?>
                             <div class="table-responsive table-hover table-sales">
-                                <table class="table datatable">
+                                <table class="table datatable-crud">
                                     <thead>
                                         <tr>
                                             <th width="20px">#</th>
@@ -43,44 +43,6 @@
                                             </th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <?php foreach($datas as $index => $data): ?>
-                                        <tr>
-                                            <td>
-                                                <?=$index+1?>
-                                            </td>
-                                            <?php 
-                                            foreach($fields as $key => $field): 
-                                                $label = $field;
-                                                if(is_array($field))
-                                                {
-                                                    $label = $field['label'];
-                                                    $data_value = Form::getData($field['type'],$data->{$key},true);
-                                                    if($field['type'] == 'number')
-                                                    {
-                                                        $data_value = number_format($data_value);
-                                                    }
-                                                    $field = $key;
-                                                }
-                                                else
-                                                {
-                                                    $data_value = $data->{$field};
-                                                }
-                                                $label = _ucwords($label);
-                                            ?>
-                                            <td><?=$data_value?></td>
-                                            <?php endforeach ?>
-                                            <td>
-                                            <?php if(is_allowed(get_route_path('crud/edit',['table'=>$table]),auth()->user->id)): ?>
-                                                <a href="<?=routeTo('crud/edit',['table'=>$table,'id'=>$data->id])?>" class="btn btn-sm btn-warning"><i class="fas fa-pencil-alt"></i> Edit</a>
-                                            <?php endif ?>
-                                            <?php if(is_allowed(get_route_path('crud/delete',['table'=>$table]),auth()->user->id)): ?>
-                                                <a href="<?=routeTo('crud/delete',['table'=>$table,'id'=>$data->id])?>" onclick="if(confirm('apakah anda yakin akan menghapus data ini ?')){return true}else{return false}" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> Hapus</a>
-                                            <?php endif ?>
-                                            </td>
-                                        </tr>
-                                        <?php endforeach ?>
-                                    </tbody>
                                 </table>
                             </div>
                         </div>
