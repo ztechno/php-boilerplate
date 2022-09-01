@@ -40,13 +40,20 @@ if(isset($_GET['draw']))
         $where = "(".implode(' OR ',$_where).")";
     }
 
-    $data  = $db->all($table,$where,[
-        $columns[$order[0]['column']] => $order[0]['dir']
-    ]);
-    $total = $db->exists($table,$where,[
-        $columns[$order[0]['column']] => $order[0]['dir']
-    ]);
-    $results = [];
+    if(file_exists('../actions/'.$table.'/override-index.php'))
+    {
+        $override = require '../actions/'.$table.'/override-index.php';
+        extract($override);
+    }
+    else
+    {
+        $data  = $db->all($table,$where,[
+            $columns[$order[0]['column']] => $order[0]['dir']
+        ]);
+        $total = $db->exists($table,$where,[
+            $columns[$order[0]['column']] => $order[0]['dir']
+        ]);
+    }
 
     foreach($data as $key => $d)
     {
