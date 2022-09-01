@@ -1,7 +1,7 @@
 <?php
 
 $table = $_GET['table'];
-Page::set_title('Tambah '.ucwords($table));
+Page::set_title('Tambah '._ucwords(__($table)));
 $error_msg = get_flash_msg('error');
 $old = get_flash_msg('old');
 $fields = config('fields')[$table];

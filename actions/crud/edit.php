@@ -1,7 +1,7 @@
 <?php
 
 $table = $_GET['table'];
-Page::set_title('Edit '.ucwords($table));
+Page::set_title('Edit '._ucwords(__($table)));
 $conn = conn();
 $db   = new Database($conn);
 $error_msg = get_flash_msg('error');
