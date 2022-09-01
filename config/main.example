@@ -8,7 +8,7 @@ $lang = require '../config/lang.php';
 return [
     'env'      => 'dev',
     'base_url' => 'http://localhost:8080',
-    'base_path' => '/',
+    'base_path' => '',
     'default_page' => 'default/index',
     'database' => [
         'driver'   => 'PDO',
@@ -27,8 +27,9 @@ return [
         'menu' => $menu,
         'icon' => $icon_menu
     ],
+    'lang' => $lang,
     'fields' => $tablefields,
-    'pretty_url' => false,
+    'pretty_url' => true,
     'theme' => [
         'header_color'     => 'blue',
         'top_navbar_color' => 'blue2',
