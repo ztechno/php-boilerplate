@@ -37,7 +37,7 @@ if(isset($_GET['draw']))
             $_where[] = "$col LIKE '%$search%'";
         }
 
-        $where = "(".implode(' OR ',$_where).")";
+        $where = " WHERE (".implode(' OR ',$_where).")";
     }
 
     if(file_exists('../actions/'.$table.'/override-index.php'))
