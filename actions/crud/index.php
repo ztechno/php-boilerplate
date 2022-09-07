@@ -19,25 +19,25 @@ if(isset($_GET['draw']))
     $order   = $_GET['order'];
     
     $columns = [];
+    $search_columns = [];
     foreach($fields as $key => $field)
     {
         $columns[] = is_array($field) ? $key : $field;
+        if(is_array($field) && isset($field['search']) && !$field['search']) continue;
+        $search_columns[] = is_array($field) ? $key : $field;
     }
-
-    // $order_by = " ORDER BY ".$columns[$order[0]['column']]." ".$order[0]['dir'];
 
     $where = "";
 
     if(!empty($search))
     {
-        // $where = "WHERE (NIK LIKE '%$search%' OR no_kk LIKE '%$search%' OR nama LIKE '%$search%' OR alamat LIKE '%$search%')";
         $_where = [];
-        foreach($columns as $col)
+        foreach($search_columns as $col)
         {
             $_where[] = "$col LIKE '%$search%'";
         }
 
-        $where = " WHERE (".implode(' OR ',$_where).")";
+        $where = "WHERE (".implode(' OR ',$_where).")";
     }
 
     if(file_exists('../actions/'.$table.'/override-index.php'))
