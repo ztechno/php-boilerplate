@@ -54,15 +54,23 @@ if(isset($_GET['draw']))
             $columns[$order[0]['column']] => $order[0]['dir']
         ]);
     }
-    
-    $results = [];
 
+    $results = [];
+    
     foreach($data as $key => $d)
     {
         $results[$key][] = $key+1;
         foreach($columns as $col)
         {
-            $field = $fields[$col];
+            $field = '';
+            if(isset($fields[$col]))
+            {
+                $field = $fields[$col];
+            }
+            else
+            {
+                $field = $col;
+            }
             $data_value = "";
             if(is_array($field))
             {
