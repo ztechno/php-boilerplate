@@ -54,6 +54,8 @@ if(isset($_GET['draw']))
             $columns[$order[0]['column']] => $order[0]['dir']
         ]);
     }
+    
+    $results = [];
 
     foreach($data as $key => $d)
     {
