@@ -114,6 +114,7 @@ class Database
         
         if($string_order)
             $this->query .= ' ORDER BY '.$string_order;
+            
         return $this->exec('exists');
     }
 
@@ -191,7 +192,7 @@ class Database
     {
         if(is_string($clause))
         {
-            return $clause;
+            return str_replace("WHERE","",$clause);
         }
         $logic = "AND";
         $count_clause = count($clause);
