@@ -1,0 +1,18 @@
+<?php
+
+return [
+    'env'          => 'dev',
+    'app_protocol' => 'http',
+    'app_domain'   => 'localhost',
+    'app_port'     => '8080',
+    'base_path'    => '',
+    'database'     => [
+        'driver'   => 'mysqli',
+        'host'     => 'localhost',
+        'username' => 'root',
+        'password' => '',
+        'dbname'   => 'database',
+        'port'     => NULL,
+        'socket'   => NULL
+    ],
+];
