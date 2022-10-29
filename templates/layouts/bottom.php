@@ -3,14 +3,14 @@
             <nav class="pull-left">
                 <ul class="nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="https://htd-official.com">
-                            Hamzah Tech Development
+                        <a class="nav-link" href="#">
+                            Z-Techno
                         </a>
                     </li>
                 </ul>
             </nav>
             <div class="copyright ml-auto">
-                Copyright &copy; 2021, made with <i class="fa fa-heart heart text-danger"></i> by <a href="https://www.htd-official.com">HTD</a>
+                Copyright &copy; 2021, made with <i class="fa fa-heart heart text-danger"></i> by <a href="#">Z-Techno</a>
             </div>				
         </div>
     </footer>
@@ -58,8 +58,11 @@
 	<!-- Atlantis DEMO methods, don't include it in your project! -->
 	<script src="<?=asset('assets/js/setting-demo.js')?>"></script>
 	<script src="<?=asset('assets/js/demo.js')?>"></script>
+	<script src="<?=asset('assets/js/plugin/datatables-pagingtype/full_numbers_no_ellipses.js')?>"></script>
 	<script>
 		$('.datatable-crud').dataTable({
+			stateSave:true,
+			pagingType: 'full_numbers_no_ellipses',
 			processing: true,
 			search: {
 				return: true
