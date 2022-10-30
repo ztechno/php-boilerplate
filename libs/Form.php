@@ -8,7 +8,10 @@ class Form
         $vals = isset($attribute['value']) ? $attribute['value'] : '';
         if($type == 'date' && !isset($attribute['value'])) $attribute['value'] = date('Y-m-d');
         foreach($attribute as $key => $value)
-            $attr .= " $key='$value'";
+        {
+            if(!is_array($value))
+                $attr .= " $key='$value'";
+        }
         
         if($type == 'textarea')
         {

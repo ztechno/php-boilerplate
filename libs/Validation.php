@@ -150,7 +150,7 @@ class Validation
             }
         }
 
-        if($rule == 'mime')
+        if(startWith($rule, 'mime'))
         {
             $_rule = explode(':', $rule);
             $all_mimes = $_rule[1]; // dbname
