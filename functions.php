@@ -572,7 +572,7 @@ function get_route_path($path, $params)
 function do_upload($file, $folder, $field = false, $multiple = false)
 {
     $filename = $file['name'];
-    $tmp      = $file['tmp'];
+    $tmp      = $file['tmp_name'];
     if($field)
     {
         $filename = $filename[$field];
