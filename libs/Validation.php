@@ -115,20 +115,24 @@ class Validation
 
         if(startWith($rule, 'unique'))
         {
+            // unique:tblname,except_key,except_value
             $exists = explode(':', $rule);
             $clause = $exists[1]; // dbname
             $clause = explode(',',$clause);
             $tablename = $clause[0];
 
-            unset($clause[0]); // remove item at index 0
-            $clause = array_values($clause); // 'reindex' array
-
-            $_clause = [];
-            foreach($clause as $k => $c)
+            $_clause = [$key => $data[$key]];
+            if(isset($clause[1]))
             {
-                $n = $k+1;
-                if($n%2==0) continue;
-                $_clause[$c] = $clause[$n];
+                unset($clause[0]); // remove item at index 0
+                $clause = array_values($clause); // 'reindex' array
+    
+                foreach($clause as $k => $c)
+                {
+                    $n = $k+1;
+                    if($n%2==0) continue;
+                    $_clause[$c] = ['<>',$clause[$n]];
+                }
             }
 
             $conn = conn();
