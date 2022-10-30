@@ -113,6 +113,55 @@ class Validation
             }
         }
 
+        if(startWith($rule, 'unique'))
+        {
+            $exists = explode(':', $rule);
+            $clause = $exists[1]; // dbname
+            $clause = explode(',',$clause);
+            $tablename = $clause[0];
+
+            unset($clause[0]); // remove item at index 0
+            $clause = array_values($clause); // 'reindex' array
+
+            $_clause = [];
+            foreach($clause as $k => $c)
+            {
+                $n = $k+1;
+                if($n%2==0) continue;
+                $_clause[$c] = $clause[$n];
+            }
+
+            $conn = conn();
+            $db   = new Database($conn);
+
+            $data = $db->exists($tablename,$_clause);
+            
+            if($data || !empty($data))
+            {
+                return ['status' => false, 'message' => __($key) . ' field is already exists'];
+            }
+        }
+
+        if($rule == 'file')
+        {
+            if(!isset($_FILES[$key]))
+            {
+                return ['status' => false, 'message' => __($key) . ' field must be a file'];
+            }
+        }
+
+        if($rule == 'mime')
+        {
+            $_rule = explode(':', $rule);
+            $all_mimes = $_rule[1]; // dbname
+            $mimes = explode(',',$all_mimes);
+            $ext  = pathinfo($data[$key]['name'], PATHINFO_EXTENSION);
+            if(!in_array($ext,$mimes))
+            {
+                return ['status' => false, 'message' => __($key) . ' field extension must be '.$all_mimes];
+            }
+        }
+
         return;
     }
 

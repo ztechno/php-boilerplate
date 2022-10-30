@@ -568,3 +568,40 @@ function get_route_path($path, $params)
     $fullpath = $path . ($pretty ? '?' : '&') . http_build_query($params);
     return $fullpath;
 }
+
+function do_upload($file, $folder, $field = false, $multiple = false)
+{
+    $filename = $file['name'];
+    $tmp      = $file['tmp'];
+    if($field)
+    {
+        $filename = $filename[$field];
+        $tmp      = $tmp[$field];
+    }
+
+    if($multiple)
+    {
+        $files = [];
+        foreach($filename as $f)
+        {
+            $ext  = pathinfo($f, PATHINFO_EXTENSION);
+            $name = strtotime('now').'.'.$ext;
+            $file_ = $folder.'/'.$name;
+            copy($tmp,$file_);
+            $files[] = $file_;
+        }
+
+        return $files;
+    }
+    else
+    {
+        $ext  = pathinfo($filename, PATHINFO_EXTENSION);
+        $name = strtotime('now').'.'.$ext;
+        $file = $folder.'/'.$name;
+        copy($tmp,$file);
+        return $file;
+    }
+
+    return false;
+
+}

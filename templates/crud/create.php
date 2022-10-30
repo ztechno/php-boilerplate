@@ -21,7 +21,7 @@
                             <?php if($error_msg): ?>
                             <div class="alert alert-danger"><?=$error_msg?></div>
                             <?php endif ?>
-                            <form action="" method="post">
+                            <form action="" method="post" enctype="multipart/form-data">
                                 <?php 
                                 foreach($fields as $key => $field): 
                                     $label = $field;
@@ -35,10 +35,11 @@
                                         $type  = $field_data['type'];
                                     }
                                     $label = _ucwords($label);
+                                    $fieldname = $type == 'file' ? $field : $table."[".$field."]";
                                 ?>
                                 <div class="form-group">
                                     <label for=""><?=$label?></label>
-                                    <?= Form::input($type, $table."[".$field."]", ['class'=>"form-control","placeholder"=>$label,"value"=>$old[$field]??'']) ?>
+                                    <?= Form::input($type, $fieldname, ['class'=>"form-control","placeholder"=>$label,"value"=>$old[$field]??'']) ?>
                                 </div>
                                 <?php endforeach ?>
                                 <div class="form-group">
