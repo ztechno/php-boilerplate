@@ -28,7 +28,7 @@ class Validation
         
         if($rule == 'required')
         {
-            if(!isset($data[$key]) || empty($data[$key]))
+            if((!isset($data[$key]) || empty($data[$key])) || (isset($_FILES[$key]) && empty($_FILES[$key]['name'])))
             {
                 return ['status' => false, 'message' => __($key) . ' field is required'];
             }
