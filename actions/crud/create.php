@@ -22,7 +22,7 @@ if(request() == 'POST')
     if(file_exists('../actions/'.$table.'/after-insert.php'))
         require '../actions/'.$table.'/after-insert.php';
 
-    set_flash_msg(['success'=>$table.' berhasil ditambahkan']);
+    set_flash_msg(['success'=>_ucwords(__($table)).' berhasil ditambahkan']);
     header('location:'.routeTo('crud/index',['table'=>$table]));
 }
 
