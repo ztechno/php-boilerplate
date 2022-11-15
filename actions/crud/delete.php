@@ -14,6 +14,6 @@ $db->delete($table,[
 if(file_exists('../actions/'.$table.'/after-delete.php'))
     require '../actions/'.$table.'/after-delete.php';
 
-set_flash_msg(['success'=>$table.' berhasil dihapus']);
+set_flash_msg(['success'=>_ucwords(__($table)).' berhasil dihapus']);
 header('location:'.routeTo('crud/index',['table'=>$table]));
 die();
