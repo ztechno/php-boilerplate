@@ -582,12 +582,12 @@ function do_upload($file, $folder, $field = false, $multiple = false)
     if($multiple)
     {
         $files = [];
-        foreach($filename as $f)
+        foreach($filename as $index => $f)
         {
             $ext  = pathinfo($f, PATHINFO_EXTENSION);
             $name = strtotime('now').'.'.$ext;
             $file_ = $folder.'/'.$name;
-            copy($tmp,$file_);
+            copy($tmp[$index],$file_);
             $files[] = $file_;
         }
 
