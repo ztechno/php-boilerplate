@@ -31,9 +31,6 @@ class Database
         $this->query = "INSERT INTO $table";
         $fields = implode(',',array_keys($val));
         $vals = array_values($val);
-        $vals = array_map(function($valss){
-            return preg_replace('/[\x00-\x1F\x7F-\xFF]/', '', $valss);
-        }, $vals);
         $values = "'".implode("','",$vals)."'";
         $this->query .= "($fields)VALUES($values)";
         return $this->exec('insert');
@@ -211,7 +208,6 @@ class Database
                 }
                 if(!in_array(strtoupper($operator),['NOT IN','IN']))
                     $val = $this->connection->real_escape_string($val);
-                $val = preg_replace('/[\x00-\x1F\x7F-\xFF]/', '', $val);
                 if(in_array($val,$this->without_quote) || in_array(strtoupper($operator),['NOT IN','IN']))
                 $string .= "$key $operator $val";
                 else
@@ -234,7 +230,6 @@ class Database
             foreach($values as $key => $value)
             {
                 $value = $this->connection->real_escape_string($value);
-                $value = preg_replace('/[\x00-\x1F\x7F-\xFF]/', '', $value);
                 if(in_array($value,$this->without_quote))
                 $string .= "$key=$value";
                 else
@@ -257,7 +252,6 @@ class Database
             foreach($order as $key => $value)
             {
                 $value = $this->connection->real_escape_string($value);
-                $value = preg_replace('/[\x00-\x1F\x7F-\xFF]/', '', $value);
                 $string .= "$key $value";
                 $last_iteration = !(--$count_order);
                 if(!$last_iteration)
