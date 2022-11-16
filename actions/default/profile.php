@@ -20,7 +20,7 @@ if(request() == 'POST')
     ]);
 
     set_flash_msg(['success'=>'Profil berhasil diupdate']);
-    header('location:index.php?r=default/profile');
+    header('location:'.routeTo('default/profile'));
 }
 
 return compact('data','success_msg');
