@@ -459,7 +459,7 @@ function simple_curl($uri, $method='GET', $data=null, $curl_headers=array(), $cu
 		case 'GET':
 			break;
 		case 'POST':
-			if(!is_string($data))
+			if($data != null && !is_string($data))
 				throw new \Exception("Invalid data for cURL request '$method $uri'");
 			curl_setopt($curl, CURLOPT_POST, true);
 			curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
