@@ -445,9 +445,6 @@ function simple_curl($uri, $method='GET', $data=null, $curl_headers=array(), $cu
 	if(!in_array($method, $allowed_methods))
 		throw new \Exception("'$method' is not valid cURL HTTP method.");
 
-	if(!empty($data) && !is_string($data))
-		throw new \Exception("Invalid data for cURL request '$method $uri'");
-
 	// init
 	$curl = curl_init($uri);
 
@@ -459,14 +456,10 @@ function simple_curl($uri, $method='GET', $data=null, $curl_headers=array(), $cu
 		case 'GET':
 			break;
 		case 'POST':
-			if($data != null && !is_string($data))
-				throw new \Exception("Invalid data for cURL request '$method $uri'");
 			curl_setopt($curl, CURLOPT_POST, true);
 			curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
 			break;
 		case 'PUT':
-			if(!is_string($data))
-				throw new \Exception("Invalid data for cURL request '$method $uri'");
 			curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $method);
 			curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
 			break;
