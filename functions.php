@@ -564,6 +564,10 @@ function get_route_path($path, $params)
 
 function do_upload($file, $folder, $field = false, $multiple = false)
 {
+    if(!is_dir($folder))
+    {
+        mkdir($folder);
+    }
     $filename = $file['name'];
     $tmp      = $file['tmp_name'];
     if($field)
