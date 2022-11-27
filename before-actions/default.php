@@ -19,4 +19,10 @@ if(isset($auth->user) && isset($auth->user->id) && !is_allowed($route, $auth->us
     return false;
 }
 
+if(startWith($route,'crud') && isset($_GET['table']) && !isset(config('fields')[$_GET['table']]))
+{
+    header("location:".routeTo('error/404'));
+    die();
+}
+
 return true;
