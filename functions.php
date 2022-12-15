@@ -90,13 +90,17 @@ function generated_menu($user_id)
                 if(is_array($submenu))
                 {
                     $_dropdown = '';
+                    $_active = false;
                     foreach($submenu as $label_submenu => $sub_submenu)
                     {
                         if($user_id != 'guest' && !is_allowed($sub_submenu,$user_id)) continue;
                         $allowed = true;
                         $start_route = $sub_submenu; // str_replace('/index','',$submenu);
                         if(!$active)
+                        {
                             $active = startWith($r, $start_route)||(isset($_GET['table'])&&$_GET['table']==$key);
+                            $_active = $active;
+                        }
                         $_dropdown .= '<li class="'.(startWith($r, $start_route)?'active':'').'">
                             <a href="'.routeTo().$sub_submenu.'">
                                 <span class="sub-item">'.ucwords($label_submenu).'</span>
@@ -104,12 +108,12 @@ function generated_menu($user_id)
                         </li>';
                     }
 
-                    $dropdown = '<li class="submenu">
-                                    <a data-toggle="collapse" href="#'.str_replace(' ','_',$key).array_search($submenu, array_values($route)).'" aria-expanded="'.($active?'true':'').'">
+                    $dropdown .= '<li class="'.($active && $_active?'submenu':'').'">
+                                    <a data-toggle="collapse" href="#'.str_replace(' ','_',$key).array_search($submenu, array_values($route)).'" aria-expanded="'.($active && $_active?'true':'').'">
                                         <span class="sub-item">'.ucwords($label).'</span>
                                         <span class="caret"></span>
                                     </a>
-                                    <div class="collapse '.($active?'show':'').'" id="'.str_replace(' ','_',$key).array_search($submenu, array_values($route)).'">
+                                    <div class="collapse '.($active && $_active?'show':'').'" id="'.str_replace(' ','_',$key).array_search($submenu, array_values($route)).'">
                                         <ul class="nav nav-collapse subnav">
                                         '.$_dropdown.'
                                         </ul>
@@ -152,12 +156,39 @@ function generated_menu($user_id)
             if($user_id != 'guest' && !is_allowed($route,$user_id)) continue;
             $start_route = str_replace('/index','',$route);
             $active = startWith($r, $start_route)||(isset($_GET['table'])&&$_GET['table']==$key);;
-            $generated .= '<li class="nav-item '.($active?'active':'').'">
-                                <a href="'.routeTo().$route.'">
-                                    <i class="'.$icon[$key].'"></i>
-                                    <p>'.ucwords($key).'</p>
-                                </a>
-                            </li>';
+
+            if($key == 'tindak lanjut permasalahan')
+            {
+                $conn  = conn();
+                $db    = new Database($conn);
+                $counter = $db->exists('feedback_receivers',['user_id'=>auth()->user->id,'status' => ['IS','NULL']]);
+
+                $generated .= '<li class="nav-item '.($active?'active':'').'">
+                                    <a href="'.routeTo().$route.'">
+                                        <i class="'.$icon[$key].'"></i>
+                                        '.($counter?'<span class="badge badge-success">'.$counter.'</span>':'').'<p>'.ucwords($key).'</p>
+                                    </a>
+                                </li>';
+            }
+            else if($key == 'timeline')
+            {
+                $counter = user_less_counter();
+                $generated .= '<li class="nav-item '.($active?'active':'').'">
+                                    <a href="'.routeTo().$route.'">
+                                        <i class="'.$icon[$key].'"></i>
+                                        '.($counter?'<span class="badge badge-success" style="margin-left: -44px;margin-right: 10px;">'.$counter.'</span>':'').'<p>'.ucwords($key).'</p>
+                                    </a>
+                                </li>';
+            }
+            else
+            {
+                $generated .= '<li class="nav-item '.($active?'active':'').'">
+                                    <a href="'.routeTo().$route.'">
+                                        <i class="'.$icon[$key].'"></i>
+                                        <p>'.ucwords($key).'</p>
+                                    </a>
+                                </li>';
+            }
         }
     }
 
