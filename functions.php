@@ -126,9 +126,25 @@ function generated_menu($user_id)
                     if($user_id != 'guest' && !is_allowed($submenu,$user_id)) continue;
                     $allowed = true;
                     $start_route = $submenu; // str_replace('/index','',$submenu);
+                    
+                    $base_route  = explode('?',$submenu);
+                    $start_route = str_replace('/index','',$base_route[0]);
+                    $url = routeTo('') . $submenu;
+                    $url = parse_url($url);
+                    $table = '';
+                    if(isset($url['query']))
+                    {
+                        parse_str($url['query'], $params); 
+                        $table = isset($params['table']) ? $params['table'] : '';
+                    }
+
                     if(!$active)
-                        $active = startWith($r, $start_route)||(isset($_GET['table'])&&$_GET['table']==$key);
-                    $dropdown .= '<li class="'.(startWith($r, $start_route)?'active':'').'">
+                    {
+                        $active = ($start_route != 'crud' ? startWith($r, $submenu) : (isset($_GET['table'])&&($_GET['table']==$key||$_GET['table']==$table)));
+                    }
+                    
+                    $submenu_active = ($start_route != 'crud' ? startWith($r, $submenu) : (isset($_GET['table'])&&($_GET['table']==$key||$_GET['table']==$table)));
+                    $dropdown .= '<li class="'.($submenu_active?'active':'').'">
                                     <a href="'.routeTo().$submenu.'">
                                         <span class="sub-item">'.($label == 'Cakupan Realisasi dan Masalah Kesehatan' ? $label : ucwords($label)).'</span>
                                     </a>
@@ -154,15 +170,26 @@ function generated_menu($user_id)
         else
         {
             if($user_id != 'guest' && !is_allowed($route,$user_id)) continue;
-            $start_route = str_replace('/index','',$route);
-            $active = startWith($r, $start_route)||(isset($_GET['table'])&&$_GET['table']==$key);;
-		
-	    $generated .= '<li class="nav-item '.($active?'active':'').'">
-			    <a href="'.routeTo().$route.'">
-				<i class="'.$icon[$key].'"></i>
-				<p>'.ucwords($key).'</p>
-			    </a>
-			</li>';
+            $base_route  = explode('?',$route);
+            $start_route = str_replace('/index','',$base_route[0]);
+            $url = routeTo('') . $route;
+            $url = parse_url($url);
+            $table = '';
+            if(isset($url['query']))
+            {
+                parse_str($url['query'], $params); 
+                $table = isset($params['table']) ? $params['table'] : '';
+            }
+
+            $active = ($start_route != 'crud' ? startWith($r, $start_route) : (isset($_GET['table'])&&($_GET['table']==$key||$_GET['table']==$table)));
+
+            
+            $generated .= '<li class="nav-item '.($active?'active':'').'">
+                                <a href="'.routeTo().$route.'">
+                                    <i class="'.$icon[$key].'"></i>
+                                    <p>'.ucwords($key).'</p>
+                                </a>
+                            </li>';
         }
     }
 
