@@ -156,39 +156,13 @@ function generated_menu($user_id)
             if($user_id != 'guest' && !is_allowed($route,$user_id)) continue;
             $start_route = str_replace('/index','',$route);
             $active = startWith($r, $start_route)||(isset($_GET['table'])&&$_GET['table']==$key);;
-
-            if($key == 'tindak lanjut permasalahan')
-            {
-                $conn  = conn();
-                $db    = new Database($conn);
-                $counter = $db->exists('feedback_receivers',['user_id'=>auth()->user->id,'status' => ['IS','NULL']]);
-
-                $generated .= '<li class="nav-item '.($active?'active':'').'">
-                                    <a href="'.routeTo().$route.'">
-                                        <i class="'.$icon[$key].'"></i>
-                                        '.($counter?'<span class="badge badge-success">'.$counter.'</span>':'').'<p>'.ucwords($key).'</p>
-                                    </a>
-                                </li>';
-            }
-            else if($key == 'timeline')
-            {
-                $counter = user_less_counter();
-                $generated .= '<li class="nav-item '.($active?'active':'').'">
-                                    <a href="'.routeTo().$route.'">
-                                        <i class="'.$icon[$key].'"></i>
-                                        '.($counter?'<span class="badge badge-success" style="margin-left: -44px;margin-right: 10px;">'.$counter.'</span>':'').'<p>'.ucwords($key).'</p>
-                                    </a>
-                                </li>';
-            }
-            else
-            {
-                $generated .= '<li class="nav-item '.($active?'active':'').'">
-                                    <a href="'.routeTo().$route.'">
-                                        <i class="'.$icon[$key].'"></i>
-                                        <p>'.ucwords($key).'</p>
-                                    </a>
-                                </li>';
-            }
+		
+	    $generated .= '<li class="nav-item '.($active?'active':'').'">
+			    <a href="'.routeTo().$route.'">
+				<i class="'.$icon[$key].'"></i>
+				<p>'.ucwords($key).'</p>
+			    </a>
+			</li>';
         }
     }
 
