@@ -3,7 +3,7 @@
 class Validation
 {
 
-    static function run(array $validate, $data)
+    static function run(array $validate, $data, $return = "redirect")
     {
         foreach($validate as $key => $rules)
         {
@@ -12,8 +12,18 @@ class Validation
                 $v = self::validate($rule, $key, $data);
                 if(isset($v['status']) && $v['status'] == false)
                 {
-                    redirectBack(['error' => $v['message'],'old' => $data]);
-                    return;
+                    if($return == 'redirect')
+                    {
+                        redirectBack(['error' => $v['message'],'old' => $data]);
+                        return;
+                    }
+
+                    if($return == 'json')
+                    {
+                        http_response_code(400);
+                        echo json_encode(['success' => false, 'message' => $v['message']]);
+                        die();
+                    }
                 }
             }
         }
