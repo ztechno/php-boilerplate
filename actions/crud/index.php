@@ -40,6 +40,9 @@ if(isset($_GET['draw']))
         $where = "WHERE (".implode(' OR ',$_where).")";
     }
 
+    $col_order = $order[0]['column']-1;
+    $col_order = $col_order < 0 ? 'id' : $columns[$col_order];
+
     if(file_exists('../actions/'.$table.'/override-index.php'))
     {
         $override = require '../actions/'.$table.'/override-index.php';
@@ -47,11 +50,11 @@ if(isset($_GET['draw']))
     }
     else
     {
-        $db->query = "SELECT * FROM $table $where ORDER BY ".$columns[$order[0]['column']]." ".$order[0]['dir']." LIMIT $start,$length";
+        $db->query = "SELECT * FROM $table $where ORDER BY ".$col_order." ".$order[0]['dir']." LIMIT $start,$length";
         $data  = $db->exec('all');
 
         $total = $db->exists($table,$where,[
-            $columns[$order[0]['column']] => $order[0]['dir']
+            $col_order => $order[0]['dir']
         ]);
     }
 
