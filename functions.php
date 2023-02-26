@@ -146,7 +146,7 @@ function generated_menu($user_id)
                     $submenu_active = ($start_route != 'crud' ? startWith($r, $submenu) : (isset($_GET['table'])&&($_GET['table']==$key||$_GET['table']==$table)));
                     $dropdown .= '<li class="'.($submenu_active?'active':'').'">
                                     <a href="'.routeTo().$submenu.'">
-                                        <span class="sub-item">'.($label == 'Cakupan Realisasi dan Masalah Kesehatan' ? $label : ucwords($label)).'</span>
+                                        <span class="sub-item">'.ucwords($label).'</span>
                                     </a>
                                 </li>';
                 }
