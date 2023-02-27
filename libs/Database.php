@@ -31,6 +31,11 @@ class Database
         $this->query = "INSERT INTO $table";
         $fields = implode(',',array_keys($val));
         $vals = array_values($val);
+        $conn = $this->connection;
+        $vals = array_map(function($valss) use ($conn) {
+            $valss = $conn->real_escape_string($valss);
+            return $valss;
+        }, $vals);
         $values = "'".implode("','",$vals)."'";
         $this->query .= "($fields)VALUES($values)";
         return $this->exec('insert');
