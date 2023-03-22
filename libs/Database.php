@@ -91,14 +91,14 @@ class Database
         return $this->exec('single');
     }
 
-    function delete($table, $clause = [])
+    function delete($table, $clause = false)
     {
         $this->table = $table;
         $conn = $this->connection;
         $this->query = "DELETE FROM $table";
-        if(count($clause) > 0)
+        if($clause)
         {
-            $string = http_build_query($clause, '', ' AND ');
+            $string = $this->build_clause($clause);
             $this->query .= ' WHERE '.$string;
         }
         return $this->exec();
